@@ -1,0 +1,113 @@
+const { EmbedBuilder, SelectMenuBuilder, ActionRowBuilder } = require("discord.js");
+
+const config = require(`../config.js`)
+
+
+
+exports.run = async (client, msg) => {
+
+    if (!msg.member.permissions.has("Administrator")) return msg.channel.reply({ content: ` bu komutu kullanmak için \`Administrator\` yetkisine sahip olmalısın.`})
+
+
+
+    const rolembed = new EmbedBuilder()
+
+    .setAuthor({ name: `${msg.guild.name} Rol Menüsü`})
+
+    .setColor("Random")
+
+    .setFooter({ text: `${config.Footer}`})
+
+    .setThumbnail(msg.guild.iconURL())
+
+    .setDescription(`Sunucumuzda Farklı ilişki rolleri için aşşağıdan istediğinz ilişkinin rolünü seçebilirsiniz. Roller; <@&${config.sevgilimvar}> & <@&${config.sevgilimyok}> & <@&${config.nomanit}> & <@&${config.lgbt}>`)
+
+    const roles = new SelectMenuBuilder()
+
+    .setCustomId("iliski")
+
+    .setPlaceholder(`İlişki Rol menüsü!`)
+
+    .setMinValues(1)
+
+    .setMaxValues(2)
+
+    .addOptions(
+
+        {
+
+            label: "Sevgilim Var 💍",
+
+            value: "sevgilimvar",
+
+            description: "@Sevgilim Var 💍 rolünü üzerinize alırsınız"
+
+        }, 
+
+        {
+
+            label: "Sevgilim Yok 💔",
+
+            value: "sevgilimyok",
+
+            description: "@Sevgilim Yok 💔 rolünü üzerinize alırsınız"
+
+        },
+
+        {
+
+            label: "No Manit No Dırdır 🤍",
+
+            value: "nomanit",
+
+            description: "@No Manit No Dırdır 🤍 rolünü üzerinize alırsınız"
+
+        },
+
+        {
+
+            label: "LGBT 🏳️‍🌈",
+
+            value: "lgbt",
+
+            description: "@LGBT 🏳️‍🌈 rolünü üzerinize alırsınız"
+
+        }, 
+
+        {
+
+            label: "Rol İstemiyorum",
+
+            value: "rol_cikarrrr",
+
+            description: "Renk rollerinizi üzerinizden alır"
+
+        }
+
+    )
+
+    const row2 = new ActionRowBuilder()
+
+    .addComponents(roles)
+
+
+
+    msg.channel.send({ embeds: [rolembed], components: [row2]})
+
+
+
+};
+
+exports.conf = {
+
+  aliases: ["ilişki-menü"]
+
+};
+
+
+
+exports.help = {
+
+  name: "iliski"
+
+};
